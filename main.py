@@ -21,17 +21,25 @@ if __name__ == "__main__":
 
     app.load_background_image("assets/terrain.png")
 
-    app.add_player(100, 100, "assets/maillot.png")
-    app.add_player(200, 100, "assets/maillot.png")
-    app.add_player(300, 100, "assets/maillot.png")
-    app.add_player(400, 100, "assets/maillot.png")
-    app.add_player(100, 200, "assets/maillot.png")
-    app.add_player(200, 200, "assets/maillot.png")
-    app.add_player(300, 200, "assets/maillot.png")
+    # template de compo en 4-2-3-1
+
+    app.add_player(95, 360, "assets/gardien.png")
+
+    app.add_player(250, 250, "assets/maillot.png")
+    app.add_player(250, 470, "assets/maillot.png")
+    app.add_player(250, 90, "assets/maillot.png")
+    app.add_player(250, 650, "assets/maillot.png")
+
     app.add_player(400, 200, "assets/maillot.png")
-    app.add_player(100, 300, "assets/maillot.png")
-    app.add_player(200, 300, "assets/maillot.png")
-    app.add_player(300, 300, "assets/maillot.png")
+    app.add_player(400, 500, "assets/maillot.png")
+
+    app.add_player(563, 120, "assets/maillot.png")
+    app.add_player(563, 360, "assets/maillot.png")
+    app.add_player(563, 590, "assets/maillot.png")
+
+    app.add_player(750, 360, "assets/maillot.png")
+
+
 
     root.config(menu=menu_bar)  # Définir la barre de menu dans la fenêtre principale
 

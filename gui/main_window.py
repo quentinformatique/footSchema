@@ -109,6 +109,8 @@ class MainWindow(Frame):
         if self.drag_motion_id:
             self.after_cancel(self.drag_motion_id)
         self.selected_player = None
+        # afficher les coordonnées du joueur
+        print(self.canvas.coords(self.selected_player.tag))
 
     def on_player_drag(self, event):
         if self.selected_player:

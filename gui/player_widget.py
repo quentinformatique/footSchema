@@ -8,8 +8,7 @@ class PlayerWidget(Canvas):
         self.scale = scale
 
         # Charger l'image avec PIL en conservant la transparence
-        image = Image.open(image_path)
-        image = image.convert("RGBA")
+        image = Image.open(image_path).convert("RGBA")
 
         # Redimensionner l'image si nécessaire
         if scale != 1.0:
@@ -21,8 +20,10 @@ class PlayerWidget(Canvas):
         photo_image = ImageTk.PhotoImage(image=image)
 
         # Appeler le constructeur de la classe parente pour créer le canvas
-        Canvas.__init__(self, master, width=photo_image.width(), height=photo_image.height(), highlightthickness=0)
+        Canvas.__init__(self, master, width=photo_image.width(), height=photo_image.height(), highlightthickness=2, highlightbackground="#00a153")
         self.create_image(0, 0, image=photo_image, anchor="nw")
+        self.config(bg="#00a153")
+
 
         # Placer le widget du joueur sur le canvas aux coordonnées spécifiées
         self.place(x=x, y=y)
@@ -31,14 +32,6 @@ class PlayerWidget(Canvas):
 
 
 
-    def load_image(self):
-        image = cv2.imread(self.image_path, cv2.IMREAD_UNCHANGED)
-        width = int(image.shape[1] * self.scale)
-        height = int(image.shape[0] * self.scale)
-        image = cv2.resize(image, (width, height), interpolation=cv2.INTER_AREA)
-
-        image_rgba = cv2.cvtColor(image, cv2.COLOR_BGR2RGBA)
-        self.image = ImageTk.PhotoImage(image=Image.fromarray(image_rgba))
 
     def on_player_drag(self, event):
         if self.selected_player:
@@ -47,3 +40,18 @@ class PlayerWidget(Canvas):
             self.master.master.canvas.move(self.tag, delta_x, delta_y)
             self.last_mouse_x = event.x
             self.last_mouse_y = event.y
+
+    def get_position(self):
+        """Récupère les coordonnées du joueur (coin supérieur gauche)"""
+        x = self.winfo_x()
+        y = self.winfo_y()
+        return x, y
+
+    def get_center(self):
+        """Récupère les coordonnées du centre du joueur"""
+        x, y = self.get_position()
+        width = self.winfo_width()
+        height = self.winfo_height()
+        center_x = x + width / 2
+        center_y = y + height / 2
+        return center_x, center_y
