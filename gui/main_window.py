@@ -110,21 +110,17 @@ class MainWindow(Frame):
             self.after_cancel(self.drag_motion_id)
         self.selected_player = None
         # afficher les coordonnées du joueur
-        print(self.canvas.coords(self.selected_player.tag))
 
     def on_player_drag(self, event):
         if self.selected_player:
             delta_x = event.x - self.last_mouse_x
             delta_y = event.y - self.last_mouse_y
 
-            self.selected_player.config(highlightthickness=0)
-
             self.canvas.move(self.selected_player.tag, delta_x, delta_y)
 
             self.last_mouse_x = event.x
             self.last_mouse_y = event.y
 
-            self.selected_player.config(highlightthickness=1)
 
     def start_drag_motion(self):
         self.drag_motion()
