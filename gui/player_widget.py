@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 
 class PlayerWidget(Canvas):
     def __init__(self, master, x, y, image_path, scale=1.0):
+        self.label = None
         self.image_path = image_path
         self.scale = scale
 

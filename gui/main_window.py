@@ -1,5 +1,8 @@
 from tkinter import Frame, Canvas, PhotoImage
+
+from gui import player_widget
 from gui.player_widget import PlayerWidget
+from tkinter import Label
 
 
 class MainWindow(Frame):
@@ -32,12 +35,56 @@ class MainWindow(Frame):
         self.canvas.create_image(0, 0, anchor="nw", image=self.background_image, tags="terrain")
 
     def add_player(self, x, y, image_path):
+        player = player_widget.PlayerWidget(self.canvas, x, y, image_path, scale=0.15)
+
+        # Variables pour suivre les mouvements de la souris spécifiques à chaque joueur
+        prev_x, prev_y = 0, 0
+
+        # Fonctions de suivi des mouvements de la souris pour déplacer le joueur
+        def on_press(event):
+            nonlocal prev_x, prev_y
+            prev_x, prev_y = event.x, event.y
+
+        def on_drag(event):
+            nonlocal prev_x, prev_y
+            delta_x = event.x - prev_x
+            delta_y = event.y - prev_y
+            self.canvas.move(player.tag, delta_x, delta_y)
+
+            # Access the label through the player object and move it along with the player
+            self.canvas.move(player.label, delta_x, delta_y)
+
+            prev_x, prev_y = event.x, event.y
+
+        def on_release(event):
+            pass
+
+        # Lier les fonctions de suivi des mouvements de la souris aux événements de la souris
+        player.bind("<ButtonPress-1>", on_press)
+        player.bind("<B1-Motion>", on_drag)
+        player.bind("<ButtonRelease-1>", on_release)
+
+        # Créer une balise "player" pour le joueur, afin que l'on puisse les identifier ultérieurement
+        player.tag = "player"
+
+        # Ajouter le joueur à la liste et sur le canvas
+        self.players.append(player)
+        player.tag = self.canvas.create_window(x, y, anchor="nw", window=player)
+
+
+
+    def add_opponent(self, x, y, image_path):
         player = PlayerWidget(self.canvas, x, y, image_path, scale=0.15)
         player.bind("<ButtonPress-1>", self.on_player_press)
         player.bind("<B1-Motion>", self.on_player_drag)
         player.bind("<ButtonRelease-1>", self.on_player_release)
         player.tag = self.canvas.create_window(x, y, anchor="nw", window=player)
         self.players.append(player)
+
+    def delete_player(self, player):
+        self.players.remove(player)
+        self.canvas.delete(player.tag)
+
 
     def on_canvas_click(self, event):
         x = event.x
@@ -138,3 +185,32 @@ class MainWindow(Frame):
             self.last_mouse_y = y
 
         self.drag_motion_id = self.after(self.drag_delay, self.drag_motion)
+
+    def add_text(self, x, y, text):
+        text_object = self.canvas.create_text(x, y, text=text, anchor="nw", font=("Arial", 30), fill="black")
+
+        # Variables pour suivre les mouvements de la souris
+        prev_x, prev_y = 0, 0
+
+        # Fonctions de suivi des mouvements de la souris pour déplacer le texte
+        def on_press(event):
+            nonlocal prev_x, prev_y
+            prev_x, prev_y = event.x, event.y
+
+        def on_drag(event):
+            nonlocal prev_x, prev_y
+            delta_x = event.x - prev_x
+            delta_y = event.y - prev_y
+            self.canvas.move(text_object, delta_x, delta_y)
+            prev_x, prev_y = event.x, event.y
+
+        def on_release(event):
+            pass
+
+        # Lier les fonctions de suivi des mouvements de la souris aux événements de la souris
+        self.canvas.tag_bind(text_object, "<ButtonPress-1>", on_press)
+        self.canvas.tag_bind(text_object, "<B1-Motion>", on_drag)
+        self.canvas.tag_bind(text_object, "<ButtonRelease-1>", on_release)
+
+
+

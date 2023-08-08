@@ -9,6 +9,7 @@ if __name__ == "__main__":
     root.wm_attributes("-transparentcolor", "gray")
     root.configure(bg="#303030")
     root.config(bg="gray")
+    root.resizable(False, False)  # Empêcher le redimensionnement de la fenêtre principale
 
     # Charger le logo de l'application
     logo = PhotoImage(file="assets/maillot.png")
@@ -25,21 +26,19 @@ if __name__ == "__main__":
 
     app.add_player(95, 360, "assets/gardien.png")
 
-    app.add_player(250, 250, "assets/maillot.png")
-    app.add_player(250, 470, "assets/maillot.png")
-    app.add_player(250, 90, "assets/maillot.png")
-    app.add_player(250, 650, "assets/maillot.png")
+    app.add_player(250, 270, "assets/maillot03.png")
+    app.add_player(250, 470, "assets/maillot04.png")
+    app.add_player(250, 90,  "assets/maillot02.png")
+    app.add_player(250, 620, "assets/maillot05.png")
 
-    app.add_player(400, 200, "assets/maillot.png")
-    app.add_player(400, 500, "assets/maillot.png")
+    app.add_player(400, 200, "assets/maillot06.png")
+    app.add_player(400, 500, "assets/maillot07.png")
 
-    app.add_player(563, 120, "assets/maillot.png")
-    app.add_player(563, 360, "assets/maillot.png")
-    app.add_player(563, 590, "assets/maillot.png")
+    app.add_player(563, 120, "assets/maillot08.png")
+    app.add_player(563, 360, "assets/maillot09.png")
+    app.add_player(563, 590, "assets/maillot10.png")
 
-    app.add_player(750, 360, "assets/maillot.png")
-
-
+    app.add_player(750, 360, "assets/maillot11.png")
 
     root.config(menu=menu_bar)  # Définir la barre de menu dans la fenêtre principale
 
